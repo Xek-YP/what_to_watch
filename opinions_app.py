@@ -43,32 +43,7 @@ class OpinionForm(FlaskForm):
 
 @app.route('/')
 def index_view():
-    quantity = Opinion.query.count()
-    if not quantity:
-        return 'В базе данных записей нет.'
-    offset_value = randrange(quantity)
-    opinion = Opinion.query.offset(offset_value).first()
-    return render_template('opinion.html', opinion=opinion)
-
-
-@app.route('/add', methods=['GET', 'POST'])
-def add_opinion_view():
-    form = OpinionForm()
-    if form.validate_on_submit():
-        opinion = Opinion(
-            title=form.title.data, text=form.text.data, source=form.source.data
-        )
-        db.session.add(opinion)
-        db.session.commit()
-        return redirect(url_for('opinion_view', id=opinion.id))
-    return render_template('add_opinion.html', form=form)
-
-
-@app.route('/opinions/<int:id>')
-def opinion_view(id):
-    opinion = Opinion.query.get_or_404(id)
-    return render_template('opinion.html', opinion=opinion)
-
+    return 'Совсем скоро тут будет случайное мнение о фильме!'
 
 if __name__ == '__main__':
     app.run()
